@@ -1,0 +1,44 @@
+
+spring:
+  application:
+    name: caiwei
+
+  # mysql config
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/work?useSSL=false&serverTimezone=CTT&characterEncoding=UTF-8
+    username: root
+    password: 1518290
+
+  # activemq config
+  activemq:
+    broker-url: tcp://192.168.129.129:61616
+    user: admin
+    password: admin
+
+  # redis config
+  redis:
+    host: 192.168.129.129
+    port: 6379
+    #default no password
+    password:
+    database: 0
+    #url: tcp://192.168.129.129:6379
+    timeout: 1000
+    #连接池配置
+    lettuce:
+      pool:
+        min-idle: 6
+        max-idle: 4
+        max-active: 8
+        max-wait: 1000
+      shutdown-timeout: 100
+
+
+
+
+
+
+
+server:
+  port: 8001
