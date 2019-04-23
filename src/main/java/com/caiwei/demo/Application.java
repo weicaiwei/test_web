@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,28 +23,41 @@ import java.util.List;
 public class Application {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(Application.class, args);
 	}
 
-	/**
-	 * 替换json框架为fastjson
-	 */
 	@Bean
-	public HttpMessageConverters fastJsonHttpMessageConverters() {
+	public HttpMessageConverter  configureMessageConverters() {
 		//1.需要定义一个convert转换消息的对象;
 		FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
 		//2:添加fastJson的配置信息;
 		FastJsonConfig fastJsonConfig = new FastJsonConfig();
-		//指定当属性值为null是是否输出：pro:null
-		fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteMapNullValue);
-		//3处理中文乱码问题
+		fastJsonConfig.setSerializerFeatures(
+				//保留map空的字段
+				SerializerFeature.WriteMapNullValue,
+				// 将String类型的null转成""
+				SerializerFeature.WriteNullStringAsEmpty,
+				// 将Number类型的null转成0
+				SerializerFeature.WriteNullNumberAsZero,
+				// 将List类型的null转成[]
+				SerializerFeature.WriteNullListAsEmpty,
+				// 将Boolean类型的null转成false
+				SerializerFeature.WriteNullBooleanAsFalse,
+				// 避免循环引用
+				SerializerFeature.DisableCircularReferenceDetect
+		);
+		//添加配置信息
+		fastConverter.setFastJsonConfig(fastJsonConfig);
+		//国际化
+		fastConverter.setDefaultCharset(StandardCharsets.UTF_8);
 		List<MediaType> fastMediaTypes = new ArrayList<>();
-		fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
+		//处理中文乱码问题
+		fastMediaTypes.add(MediaType.APPLICATION_JSON);
 		//4.在convert中添加配置信息.
 		fastConverter.setSupportedMediaTypes(fastMediaTypes);
-		fastConverter.setFastJsonConfig(fastJsonConfig);
-		//返回构成用的组件Bean
-		return new HttpMessageConverters((HttpMessageConverter<?>) fastConverter);
+
+		return fastConverter;
 	}
 
 }
