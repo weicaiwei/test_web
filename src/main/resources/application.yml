@@ -4,9 +4,8 @@ server:
 
 logging:
   level:
-    org.springframework.boot : debug
-
-
+    org.springframework.boot: info
+    org.apache.ibatis: debug
 
 spring:
   application:
@@ -19,7 +18,7 @@ spring:
   # mysql config
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/work?useSSL=false&serverTimezone=CTT&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/test?useSSL=false&serverTimezone=CTT&characterEncoding=UTF-8
     username: root
     password: 1518290
 

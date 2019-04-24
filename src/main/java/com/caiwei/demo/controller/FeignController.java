@@ -22,7 +22,7 @@ import java.util.Map;
 @RestController
 //检查@RequestParm需要将@Validated写在类上，目前不知道原因
 @Validated
-public class HelloFeign {
+public class FeignController {
 
     @Autowired
     private Response response;
