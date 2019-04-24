@@ -2,6 +2,12 @@
 server:
   port: 80
 
+logging:
+  level:
+    org.springframework.boot : debug
+
+
+
 spring:
   application:
     name: caiwei
