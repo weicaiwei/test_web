@@ -1,25 +1,20 @@
-package com.caiwei.demo.feign;
+package com.caiwei.demo.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.caiwei.demo.global.NowApplicationContext;
+import com.caiwei.demo.feign.CaiweiFeign;
+import com.caiwei.demo.feign.GitHubFeign;
 import com.caiwei.demo.global.response.Response;
 import com.caiwei.demo.global.response.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.tiles3.SpringWildcardServletTilesApplicationContext;
-
-import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import java.util.Map;
 
 /**
  * @ClassName: helloFeign
- * @Description: TODO
+ * @Description: feign使用demo
  * @auther: caiwei
  * @date: 2019/4/21 22:35
  */
