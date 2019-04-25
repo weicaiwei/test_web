@@ -5,7 +5,8 @@ server:
 logging:
   level:
     org.springframework.boot: info
-    org.apache.ibatis: debug
+    org.apache.ibatis: info
+
 
 spring:
   application:
@@ -24,18 +25,18 @@ spring:
 
   # activemq config
   activemq:
-    broker-url: tcp://192.168.129.129:61616
+    broker-url: tcp://www.caiwei.ink:61616
     user: admin
     password: admin
 
   # redis config
   redis:
-    host: 192.168.129.129
+    host: www.caiwei.ink
     port: 6379
     #default no password
     password:
     database: 0
-    #url: tcp://192.168.129.129:6379
+    #url: tcp://192.168.129.128:6379
     timeout: 1000
     #连接池配置
     lettuce:
