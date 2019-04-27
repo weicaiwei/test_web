@@ -6,9 +6,11 @@ import com.caiwei.demo.global.response.Result;
 import com.caiwei.demo.mapper.DepartmentMapper;
 import com.caiwei.demo.model.Department;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @ClassName: TestController
@@ -41,5 +43,21 @@ public class TestController {
     public Result queryDepartment(Integer id) {
         Department department = departmentMapper.queryDepartment(id);
         return response.success(department);
+    }
+
+    @RequestMapping(value = "/first", method = RequestMethod.GET)
+    public Map<String, Object> firstResp (HttpServletRequest request){
+        Map<String, Object> map = new HashMap<>();
+        request.getSession().setAttribute("url", request.getRequestURL());
+        map.put("request Url", request.getRequestURL());
+        return map;
+    }
+
+    @RequestMapping(value = "/sessions", method = RequestMethod.GET)
+    public Object sessions (HttpServletRequest request){
+        Map<String, Object> map = new HashMap<>();
+        map.put("sessionId", request.getSession().getId());
+        map.put("message", request.getSession().getAttribute("url"));
+        return map;
     }
 }

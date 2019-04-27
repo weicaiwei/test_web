@@ -1,6 +1,7 @@
 
 server:
-  port: 80
+  port: 8002
+
 
 logging:
   level:
@@ -14,7 +15,6 @@ spring:
 
   resources:
     add-mappings: true
-
 
   # mysql config
   datasource:
