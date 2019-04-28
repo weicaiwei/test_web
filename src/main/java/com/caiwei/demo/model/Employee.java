@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class Employee {
 
-    private Integer id;
+    private Long id;
     private String name;
     private String gender;
     private String email;

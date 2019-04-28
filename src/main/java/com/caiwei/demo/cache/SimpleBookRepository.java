@@ -1,5 +1,6 @@
 package com.caiwei.demo.cache;
 
+import com.caiwei.demo.model.Book;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 

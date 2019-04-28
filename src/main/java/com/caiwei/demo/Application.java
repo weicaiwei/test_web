@@ -1,5 +1,6 @@
 package com.caiwei.demo;
 
+import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
@@ -56,6 +57,8 @@ public class Application {
 		fastMediaTypes.add(MediaType.APPLICATION_JSON);
 		//4.在convert中添加配置信息.
 		fastConverter.setSupportedMediaTypes(fastMediaTypes);
+		//autoType开启
+		ParserConfig.getGlobalInstance().addAccept("com.caiwei.demo.model");
 
 		return fastConverter;
 	}

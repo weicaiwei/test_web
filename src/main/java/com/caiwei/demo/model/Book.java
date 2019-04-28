@@ -1,4 +1,4 @@
-package com.caiwei.demo.cache;
+package com.caiwei.demo.model;
 
 import lombok.Data;
 

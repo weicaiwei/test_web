@@ -1,6 +1,6 @@
 
 server:
-  port: 8002
+  port: 8001
 
 
 logging:
@@ -46,4 +46,5 @@ spring:
         max-active: 8
         max-wait: 1000
       shutdown-timeout: 100
+
 

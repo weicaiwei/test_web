@@ -1,5 +1,7 @@
 package com.caiwei.demo.cache;
 
+import com.caiwei.demo.model.Book;
+
 /**
  * @ClassName: BookRepository
  * @Description: TODO
