@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.constraints.Size;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -41,8 +42,7 @@ public class FeignController {
     public Map helloFeign() {
 
         String hello = caiweiFeign.hello();
-        Map map = JSON.parseObject(hello, java.util.HashMap.class);
-        return map;
+        return JSON.parseObject(hello, HashMap.class);
     }
 
     @GetMapping(value="/hello/{name}")

@@ -47,4 +47,9 @@ spring:
         max-wait: 1000
       shutdown-timeout: 100
 
+  # mongoDb config
+  data:
+    mongodb:
+      uri: mongodb://www.caiwei.ink:27017/root
+
 

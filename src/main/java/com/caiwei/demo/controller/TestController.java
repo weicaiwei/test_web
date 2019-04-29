@@ -4,12 +4,17 @@ import com.caiwei.demo.global.NowApplicationContext;
 import com.caiwei.demo.global.response.Response;
 import com.caiwei.demo.global.response.Result;
 import com.caiwei.demo.mapper.DepartmentMapper;
+import com.caiwei.demo.model.Book;
 import com.caiwei.demo.model.Department;
+import com.caiwei.demo.mongodb.MongoDBService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.ExecutableFindOperation;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -59,5 +64,30 @@ public class TestController {
         map.put("sessionId", request.getSession().getId());
         map.put("message", request.getSession().getAttribute("url"));
         return map;
+    }
+
+    @Autowired
+    MongoDBService mongoDBService;
+
+    @Autowired
+    MongoTemplate mongoTemplate;
+
+    @GetMapping("/mongo")
+    public Result queryMongo() {
+
+
+        Book book1 = new Book();
+        book1.setIsbn("caiwei");
+        book1.setTitle("母猪的产后护理");
+
+        Book book2 = new Book();
+        book2.setIsbn("wan");
+        book2.setTitle("母猪的产前护理");
+
+        mongoDBService.saveTest(book1);
+        mongoDBService.saveTest(book2);
+        List<Book> bookList = mongoTemplate.findAll(Book.class);
+        return response.success(bookList);
+
     }
 }

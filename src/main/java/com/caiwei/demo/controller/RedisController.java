@@ -27,6 +27,7 @@ public class RedisController {
     @Autowired
     Response response;
 
+
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     HttpSession session;
