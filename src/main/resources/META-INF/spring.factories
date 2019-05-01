@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.caiwei.demo.autoconfigure.TestServiceAutoConfiguration
+

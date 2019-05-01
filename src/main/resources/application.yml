@@ -1,6 +1,6 @@
 
 server:
-  port: 8001
+  port: 80
 
 
 logging:
@@ -51,5 +51,4 @@ spring:
   data:
     mongodb:
       uri: mongodb://www.caiwei.ink:27017/root
-
 

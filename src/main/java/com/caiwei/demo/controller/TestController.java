@@ -1,5 +1,6 @@
 package com.caiwei.demo.controller;
 
+import com.caiwei.demo.autoconfigure.TestService;
 import com.caiwei.demo.global.NowApplicationContext;
 import com.caiwei.demo.global.response.Response;
 import com.caiwei.demo.global.response.Result;
@@ -51,7 +52,7 @@ public class TestController {
     }
 
     @RequestMapping(value = "/first", method = RequestMethod.GET)
-    public Map<String, Object> firstResp (HttpServletRequest request){
+    public Map<String, Object> firstResp(HttpServletRequest request) {
         Map<String, Object> map = new HashMap<>();
         request.getSession().setAttribute("url", request.getRequestURL());
         map.put("request Url", request.getRequestURL());
@@ -59,7 +60,7 @@ public class TestController {
     }
 
     @RequestMapping(value = "/sessions", method = RequestMethod.GET)
-    public Object sessions (HttpServletRequest request){
+    public Object sessions(HttpServletRequest request) {
         Map<String, Object> map = new HashMap<>();
         map.put("sessionId", request.getSession().getId());
         map.put("message", request.getSession().getAttribute("url"));
@@ -89,5 +90,16 @@ public class TestController {
         List<Book> bookList = mongoTemplate.findAll(Book.class);
         return response.success(bookList);
 
+    }
+
+    @Autowired
+    TestService testService;
+
+    @GetMapping("autoconfigure")
+
+    public Result helloAutoConfigure() {
+
+        String helloAuto = testService.sayHello();
+        return response.success(helloAuto);
     }
 }
