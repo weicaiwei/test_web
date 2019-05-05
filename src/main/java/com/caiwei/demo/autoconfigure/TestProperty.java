@@ -18,4 +18,6 @@ public class TestProperty {
 
     private String msg = MSG;
 
+    private String name = "caiwei";
+
 }

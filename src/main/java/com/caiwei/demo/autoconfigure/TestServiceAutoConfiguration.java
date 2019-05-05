@@ -23,12 +23,25 @@ public class TestServiceAutoConfiguration {
     TestProperty testProperty;
 
     @Bean
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(name = "testService")
     public TestService testService() {
-
+        System.out.println("未验证参数");
         TestService testService = new TestService();
         testService.setMsg(testProperty.getMsg());
+        testService.setName(testProperty.getName());
         testService.sayHello();
         return testService;
     }
+
+    @Bean
+    @ConditionalOnMissingBean(name = "testService2")
+    //@ConditionalOnProperty要求必须在配置文件中配置了name=havingValue的参数才行，
+    //如果没有在配置文件中定义此参数，即使在Property类中的默认值与条件中的相等，那么也不会生成bean成功
+    @ConditionalOnProperty(name = "msg",havingValue = "springboot-no")
+    public TestService testService2() {
+        System.out.println("验证了参数");
+        TestService testService2 = new TestService();
+        return testService2;
+    }
+
 }

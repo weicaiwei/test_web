@@ -14,9 +14,11 @@ public class TestService {
 
     private String msg;
 
+    private String name;
+
     public String sayHello() {
 
-        System.out.println("springboot-autoconfigure,hello:" + msg);
-        return "hello world! " + msg;
+        System.out.println("springboot-autoconfigure,hello:" + msg+name);
+        return "hello world! " + msg + "name:" + name;
     }
 }

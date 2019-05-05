@@ -8,6 +8,9 @@ import com.caiwei.demo.mapper.DepartmentMapper;
 import com.caiwei.demo.model.Book;
 import com.caiwei.demo.model.Department;
 import com.caiwei.demo.mongodb.MongoDBService;
+import com.caiwei.demo.quartz.BeforeJob;
+import com.caiwei.demo.quartz.QuartzUtil;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.ExecutableFindOperation;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -17,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @ClassName: TestController
@@ -101,5 +105,19 @@ public class TestController {
 
         String helloAuto = testService.sayHello();
         return response.success(helloAuto);
+    }
+
+    @Autowired
+    QuartzUtil quartzUtil;
+
+    @GetMapping("/quartz/{name}/{internal}")
+    public Result quartzScheduler(
+            @PathVariable("name")String name,
+            @PathVariable("internal") Integer internal) {
+
+        boolean b = quartzUtil.addSimpleJob(name, internal, TimeUnit.SECONDS, BeforeJob.class);
+
+        return response.success("成功了");
+
     }
 }
