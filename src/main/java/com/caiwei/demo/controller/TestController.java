@@ -17,6 +17,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -119,5 +120,21 @@ public class TestController {
 
         return response.success("成功了");
 
+    }
+
+    @CrossOrigin
+    @GetMapping("/induo")
+    public List<String> getArrray() {
+        List<String> array = new ArrayList<>();
+        array.add("sdfdsf");
+        array.add("fdsf");
+        array.add("dsfds");
+        array.add("gfdg");
+        array.add("sdfhfhdsf");
+        array.add("fgfd");
+        array.add("fgsdfsffd");
+        array.add("123");
+        array.add("3123123");
+        return array;
     }
 }

@@ -15,7 +15,7 @@ import java.time.Duration;
 
 /**
  * @ClassName: CaCheManager
- * @Description: TODO
+ * @Description: 缓存
  * @auther: caiwei
  * @date: 2019/4/26 00:34
  */
@@ -23,7 +23,7 @@ import java.time.Duration;
 public class CaCheConfig {
 
     @Autowired
-    RedisSerializer redisSerializer;
+    private RedisSerializer redisSerializer;
 
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {

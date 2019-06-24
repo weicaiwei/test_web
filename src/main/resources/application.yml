@@ -79,4 +79,10 @@ spring:
     #jdbc:
     #initialize-schema: never
 
+ftp:
+  ip: 192.168.129.128
+  port: 21
+  user: caiwei
+  password: 1518290
+  timeout: 12000
 

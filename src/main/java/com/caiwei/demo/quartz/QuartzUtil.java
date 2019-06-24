@@ -5,6 +5,7 @@ import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -21,16 +22,26 @@ public class QuartzUtil {
     private static String TRIGGER_GROUP_NAME = "DEFAULT_TRIGGER_GROUP_NAME";
 
     @Autowired
-    Scheduler scheduler;
+    private Scheduler scheduler;
 
-    //addSimpleJob简略版
+    //addSimpleJob简略版无额外参数
     public boolean addSimpleJob(String jobName,Integer interval, TimeUnit timeUnit, Class<? extends Job> jobClass) {
-        return addSimpleJob(jobName, JOB_GROUP_NAME, jobName, TRIGGER_GROUP_NAME, interval, timeUnit,jobClass);
+        return addSimpleJob(jobName, JOB_GROUP_NAME, jobName, TRIGGER_GROUP_NAME, interval, timeUnit,null,jobClass);
     }
 
-    //addCronJob简略版
+    //addSimpleJob简略版有额外参数
+    public boolean addSimpleJob(String jobName,Integer interval, TimeUnit timeUnit, Map<String,Object> extraParam, Class<? extends Job> jobClass) {
+        return addSimpleJob(jobName, JOB_GROUP_NAME, jobName, TRIGGER_GROUP_NAME, interval, timeUnit,extraParam,jobClass);
+    }
+
+    //addCronJob简略版无额外参数
     public boolean addCronJob(String jobName, String cronExpression, Class<? extends Job> jobClass) {
-        return addCronJob(jobName,JOB_GROUP_NAME,jobName, TRIGGER_GROUP_NAME, cronExpression, jobClass);
+        return addCronJob(jobName,JOB_GROUP_NAME,jobName, TRIGGER_GROUP_NAME, cronExpression,null, jobClass);
+    }
+
+    //addCronJob简略版有额外参数
+    public boolean addCronJob(String jobName, String cronExpression, Map<String,Object> extraParam, Class<? extends Job> jobClass) {
+        return addCronJob(jobName,JOB_GROUP_NAME,jobName, TRIGGER_GROUP_NAME, cronExpression,extraParam, jobClass);
     }
 
     //modifySimpleJobTime简略版
@@ -57,13 +68,16 @@ public class QuartzUtil {
      * @author: caiwei
      * @date: 2019/5/5 21:08
      */
-    public boolean addSimpleJob(String jobName, String jobGroup, String triggerName, String triggerGroup, Integer interval, TimeUnit timeUnit, Class<? extends Job> JobClass) {
+    public boolean addSimpleJob(String jobName, String jobGroup, String triggerName, String triggerGroup, Integer interval, TimeUnit timeUnit,Map<String,Object> extraParam, Class<? extends Job> JobClass) {
 
         try {
             JobDetail jobDetail = JobBuilder
                     .newJob(JobClass)
                     .withIdentity(jobName, jobGroup)
                     .build();
+            if (extraParam != null) {
+                jobDetail.getJobDataMap().putAll(extraParam);
+            }
             SimpleTrigger simpleTrigger = TriggerBuilder
                     .newTrigger()
                     .withIdentity(triggerName, triggerGroup)
@@ -87,13 +101,16 @@ public class QuartzUtil {
      * @author: caiwei
      * @date: 2019/5/5 21:11
      */
-    public boolean addCronJob(String jobName, String jobGroup, String triggerName, String triggerGroup, String cronExpression, Class<? extends Job> JobClass) {
+    public boolean addCronJob(String jobName, String jobGroup, String triggerName, String triggerGroup, String cronExpression, Map<String,Object> extraParam, Class<? extends Job> JobClass) {
 
         try {
             JobDetail jobDetail = JobBuilder
                     .newJob(JobClass)
                     .withIdentity(jobName, jobGroup)
                     .build();
+            if (extraParam != null) {
+                jobDetail.getJobDataMap().putAll(extraParam);
+            }
             CronTrigger cronTrigger = TriggerBuilder
                     .newTrigger()
                     .withIdentity(triggerName,triggerGroup)
