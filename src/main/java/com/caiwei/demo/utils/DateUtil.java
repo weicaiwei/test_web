@@ -2,6 +2,7 @@ package com.caiwei.demo.utils;
 
 import org.aspectj.lang.annotation.AfterReturning;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -32,5 +33,9 @@ public class DateUtil {
             default:
                 return calendar.getTime();
         }
+    }
+
+    public static String getFormatNow(){
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
     }
 }
