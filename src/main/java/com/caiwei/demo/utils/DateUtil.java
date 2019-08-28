@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class DateUtil {
 
-    public static Date getAppointedDateTime(TimeUnit timeUnit, Integer several){
+    public static Date getAppointedDateTimeByNow(TimeUnit timeUnit, Integer several){
         Calendar calendar = Calendar.getInstance();
         switch (timeUnit) {
             case SECONDS:
@@ -37,5 +37,10 @@ public class DateUtil {
 
     public static String getFormatNow(){
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+    }
+
+    public static String getFormatDateTime(Date date, String pattern) {
+
+        return new SimpleDateFormat(pattern).format(date);
     }
 }

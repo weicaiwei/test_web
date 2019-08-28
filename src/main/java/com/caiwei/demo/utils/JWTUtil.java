@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @ClassName: JWTUtil
- * @Description: TODO
+ * @Description: 生成 json web token工具类
  * @auther: caiwei
  * @date: 2019/6/24 23:42
  */
@@ -29,7 +29,7 @@ public class JWTUtil {
         key = new SecretKeySpec(encodeSecretKey, 0,encodeSecretKey.length,"AES");
     }
 
-    public static String build(String phone, String[] roles) throws InvalidKeyException {
+    public static String build(String username, String[] roles) {
 
         //然后根据这个secret创建jwt
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -38,10 +38,10 @@ public class JWTUtil {
                 .setHeaderParam("typ", "JWT")
                 .setHeaderParam("alg", "HS256")
                 .setIssuedAt(now)
-                .claim("phone", phone)
+                .claim("phone", username)
                 .claim("roles", roles)
                 .setIssuer("caiwei")
-                .setExpiration(DateUtil.getAppointedDateTime(TimeUnit.MINUTES, 30))
+                .setExpiration(DateUtil.getAppointedDateTimeByNow(TimeUnit.MINUTES, 30))
                 .signWith(signatureAlgorithm, key);
 
         return builder.compact();
@@ -57,6 +57,34 @@ public class JWTUtil {
         String role = (String) claims.get("role");
         System.out.println("name:" + name + ";role:" + role);
 */
+    }
 
+    public static String build(String username) {
+
+        //然后根据这个secret创建jwt
+        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+        Date now = new Date();
+        JwtBuilder builder = Jwts.builder()
+                .setHeaderParam("typ", "JWT")
+                .setHeaderParam("alg", "HS256")
+                .setIssuedAt(now)
+                .claim("phone", username)
+                .setIssuer("caiwei")
+                .setExpiration(DateUtil.getAppointedDateTimeByNow(TimeUnit.MINUTES, 30))
+                .signWith(signatureAlgorithm, key);
+
+        return builder.compact();
+        /*String jwt = builder.compact();
+        System.out.println("jwt:" + jwt);
+
+
+        Claims claims = Jwts.parser()
+                .setSigningKey(key)
+                .parseClaimsJws(jwt)
+                .getBody();
+        String name = (String) claims.get("name");
+        String role = (String) claims.get("role");
+        System.out.println("name:" + name + ";role:" + role);
+*/
     }
 }

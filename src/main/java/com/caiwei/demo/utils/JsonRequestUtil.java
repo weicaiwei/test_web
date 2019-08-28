@@ -15,13 +15,13 @@ import java.nio.charset.StandardCharsets;
  * @auther: caiwei
  * @date: 2019/6/16 14:03
  */
-public class RequestJsonUtil {
+public class JsonRequestUtil {
 
     private static final String HTTP_METHOD_GET ="GET";
     private static final String HTTP_METHOD_POST ="POST";
 
-    public static <T> T getRequestObject(HttpServletRequest request, Class<T> tClass) throws IOException {
-        String json = getRequestJsonString(request);
+    public static <T> T getJsonRequestObject(HttpServletRequest request, Class<T> tClass) throws IOException {
+        String json = getRequestString(request);
         return JSON.parseObject(json, tClass);
     }
     /**
@@ -30,7 +30,7 @@ public class RequestJsonUtil {
      * @return: String
      * @throws: IOException
      */
-    public static String getRequestJsonString(HttpServletRequest request)
+    public static String getRequestString(HttpServletRequest request)
             throws IOException {
         String submitMethod = request.getMethod();
         // GET
@@ -75,11 +75,11 @@ public class RequestJsonUtil {
         }
         byte[] buffer = new byte[contentLength];
         for (int i = 0; i < contentLength;) {
-            int readlen = request.getInputStream().read(buffer, i, contentLength - i);
-            if (readlen == -1) {
+            int readLen = request.getInputStream().read(buffer, i, contentLength - i);
+            if (readLen == -1) {
                 break;
             }
-            i += readlen;
+            i += readLen;
         }
         return buffer;
     }
