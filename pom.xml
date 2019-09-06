@@ -150,6 +150,13 @@
 			<version>3.6</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
 		<!-- 基于jwt的token依赖，相比于传统session方式，此方式更适合于微服务分布式服务器架构 -->
 		<dependency>

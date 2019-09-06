@@ -25,38 +25,38 @@ public class QuartzUtil {
     private Scheduler scheduler;
 
     //addSimpleJob简略版无额外参数
-    public boolean addSimpleJob(String jobName,Integer interval, TimeUnit timeUnit, Class<? extends Job> jobClass) {
-        return addSimpleJob(jobName, JOB_GROUP_NAME, jobName, TRIGGER_GROUP_NAME, interval, timeUnit,null,jobClass);
+    public void addSimpleJob(String jobName,Integer interval, TimeUnit timeUnit, Class<? extends Job> jobClass) throws SchedulerException {
+        addSimpleJob(jobName, JOB_GROUP_NAME, jobName, TRIGGER_GROUP_NAME, interval, timeUnit,null,jobClass);
     }
 
     //addSimpleJob简略版有额外参数
-    public boolean addSimpleJob(String jobName,Integer interval, TimeUnit timeUnit, Map<String,Object> extraParam, Class<? extends Job> jobClass) {
-        return addSimpleJob(jobName, JOB_GROUP_NAME, jobName, TRIGGER_GROUP_NAME, interval, timeUnit,extraParam,jobClass);
+    public void addSimpleJob(String jobName,Integer interval, TimeUnit timeUnit, Map<String,Object> extraParam, Class<? extends Job> jobClass) throws SchedulerException {
+        addSimpleJob(jobName, JOB_GROUP_NAME, jobName, TRIGGER_GROUP_NAME, interval, timeUnit,extraParam,jobClass);
     }
 
     //addCronJob简略版无额外参数
-    public boolean addCronJob(String jobName, String cronExpression, Class<? extends Job> jobClass) {
-        return addCronJob(jobName,JOB_GROUP_NAME,jobName, TRIGGER_GROUP_NAME, cronExpression,null, jobClass);
+    public void addCronJob(String jobName, String cronExpression, Class<? extends Job> jobClass) throws SchedulerException {
+        addCronJob(jobName,JOB_GROUP_NAME,jobName, TRIGGER_GROUP_NAME, cronExpression,null, jobClass);
     }
 
     //addCronJob简略版有额外参数
-    public boolean addCronJob(String jobName, String cronExpression, Map<String,Object> extraParam, Class<? extends Job> jobClass) {
-        return addCronJob(jobName,JOB_GROUP_NAME,jobName, TRIGGER_GROUP_NAME, cronExpression,extraParam, jobClass);
+    public void addCronJob(String jobName, String cronExpression, Map<String,Object> extraParam, Class<? extends Job> jobClass) throws SchedulerException {
+        addCronJob(jobName,JOB_GROUP_NAME,jobName, TRIGGER_GROUP_NAME, cronExpression,extraParam, jobClass);
     }
 
     //modifySimpleJobTime简略版
-    public boolean modifySimpleJobTime(String triggerName, Integer interval, TimeUnit timeUnit) {
-        return modifySimpleJobTime(triggerName, TRIGGER_GROUP_NAME, interval, timeUnit);
+    public void modifySimpleJobTime(String triggerName, Integer interval, TimeUnit timeUnit) throws SchedulerException {
+         modifySimpleJobTime(triggerName, TRIGGER_GROUP_NAME, interval, timeUnit);
     }
 
     //modifyCronJobTime简略版
-    public boolean modifyCronJobTime(String triggerName, String cronExpression) {
-        return modifyCronJobTime(triggerName, TRIGGER_GROUP_NAME, cronExpression);
+    public void modifyCronJobTime(String triggerName, String cronExpression) throws SchedulerException {
+         modifyCronJobTime(triggerName, TRIGGER_GROUP_NAME, cronExpression);
     }
 
     //removeJob简略版
-    public boolean removeJob(String jobName) {
-        return removeJob(jobName, JOB_GROUP_NAME, jobName, TRIGGER_GROUP_NAME);
+    public void removeJob(String jobName) throws SchedulerException {
+        removeJob(jobName, JOB_GROUP_NAME, jobName, TRIGGER_GROUP_NAME);
     }
 
     /**
@@ -68,28 +68,22 @@ public class QuartzUtil {
      * @author: caiwei
      * @date: 2019/5/5 21:08
      */
-    public boolean addSimpleJob(String jobName, String jobGroup, String triggerName, String triggerGroup, Integer interval, TimeUnit timeUnit,Map<String,Object> extraParam, Class<? extends Job> JobClass) {
+    public void addSimpleJob(String jobName, String jobGroup, String triggerName, String triggerGroup, Integer interval, TimeUnit timeUnit,Map<String,Object> extraParam, Class<? extends Job> JobClass) throws SchedulerException {
 
-        try {
-            JobDetail jobDetail = JobBuilder
-                    .newJob(JobClass)
-                    .withIdentity(jobName, jobGroup)
-                    .build();
-            if (extraParam != null) {
-                jobDetail.getJobDataMap().putAll(extraParam);
-            }
-            SimpleTrigger simpleTrigger = TriggerBuilder
-                    .newTrigger()
-                    .withIdentity(triggerName, triggerGroup)
-                    .withSchedule(getSimpleScheduleBuilder(interval, timeUnit))
-                    .startNow()
-                    .build();
-            scheduler.scheduleJob(jobDetail, simpleTrigger);
-        } catch (SchedulerException e) {
-            e.printStackTrace();
-            return false;
+        JobDetail jobDetail = JobBuilder
+                .newJob(JobClass)
+                .withIdentity(jobName, jobGroup)
+                .build();
+        if (extraParam != null) {
+            jobDetail.getJobDataMap().putAll(extraParam);
         }
-        return true;
+        SimpleTrigger simpleTrigger = TriggerBuilder
+                .newTrigger()
+                .withIdentity(triggerName, triggerGroup)
+                .withSchedule(getSimpleScheduleBuilder(interval, timeUnit))
+                .startNow()
+                .build();
+        scheduler.scheduleJob(jobDetail, simpleTrigger);
     }
 
     /**
@@ -101,27 +95,21 @@ public class QuartzUtil {
      * @author: caiwei
      * @date: 2019/5/5 21:11
      */
-    public boolean addCronJob(String jobName, String jobGroup, String triggerName, String triggerGroup, String cronExpression, Map<String,Object> extraParam, Class<? extends Job> JobClass) {
+    public void addCronJob(String jobName, String jobGroup, String triggerName, String triggerGroup, String cronExpression, Map<String,Object> extraParam, Class<? extends Job> JobClass) throws SchedulerException {
 
-        try {
-            JobDetail jobDetail = JobBuilder
-                    .newJob(JobClass)
-                    .withIdentity(jobName, jobGroup)
-                    .build();
-            if (extraParam != null) {
-                jobDetail.getJobDataMap().putAll(extraParam);
-            }
-            CronTrigger cronTrigger = TriggerBuilder
-                    .newTrigger()
-                    .withIdentity(triggerName,triggerGroup)
-                    .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression))
-                    .build();
-            scheduler.scheduleJob(jobDetail, cronTrigger);
-        } catch (SchedulerException e) {
-            e.printStackTrace();
-            return false;
+        JobDetail jobDetail = JobBuilder
+                .newJob(JobClass)
+                .withIdentity(jobName, jobGroup)
+                .build();
+        if (extraParam != null) {
+            jobDetail.getJobDataMap().putAll(extraParam);
         }
-        return true;
+        CronTrigger cronTrigger = TriggerBuilder
+                .newTrigger()
+                .withIdentity(triggerName,triggerGroup)
+                .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression))
+                .build();
+        scheduler.scheduleJob(jobDetail, cronTrigger);
     }
 
     /**
@@ -133,17 +121,14 @@ public class QuartzUtil {
      * @author: caiwei
      * @date: 2019/5/5 21:39
      */
-    public boolean modifySimpleJobTime(String triggerName,String triggerGroup, Integer interval, TimeUnit timeUnit){
-        try {
-            TriggerKey triggerKey = TriggerKey.triggerKey(triggerName, triggerGroup);
-            SimpleTrigger oldTrigger = (SimpleTrigger) scheduler.getTrigger(triggerKey);
-            if(oldTrigger == null){
-                log.error("未找到相关任务");
-                return false;
-            }
+    public void modifySimpleJobTime(String triggerName,String triggerGroup, Integer interval, TimeUnit timeUnit) throws SchedulerException {
+
+        TriggerKey triggerKey = TriggerKey.triggerKey(triggerName, triggerGroup);
+        SimpleTrigger oldTrigger = (SimpleTrigger) scheduler.getTrigger(triggerKey);
+        if (oldTrigger != null) {
             //unit:milliseconds
             Long oldInterval = oldTrigger.getRepeatInterval();
-            if( !oldInterval.equals(getMilliseconds(interval,timeUnit)) ){
+            if (!oldInterval.equals(getMilliseconds(interval, timeUnit))) {
                 SimpleTrigger simpleTrigger = TriggerBuilder
                         .newTrigger()
                         .withIdentity(triggerName, triggerGroup)
@@ -152,13 +137,11 @@ public class QuartzUtil {
                         .build();
                 scheduler.rescheduleJob(triggerKey, simpleTrigger);
             }
-        } catch (SchedulerException e) {
-            e.printStackTrace();
-            log.error("修改简单定时任务间隔时间失败");
-            return false;
+        } else {
+            log.error("未找到相关任务");
         }
-        return true;
     }
+
 
     /**
      * @Title modifyCronJob
@@ -169,14 +152,11 @@ public class QuartzUtil {
      * @author: caiwei
      * @date: 2019/5/5 21:42
      */
-    public boolean modifyCronJobTime(String triggerName,String triggerGroup,String cronExpression){
-        try {
-            TriggerKey triggerKey = TriggerKey.triggerKey(triggerName, triggerGroup);
-            CronTrigger oldTrigger = (CronTrigger) scheduler.getTrigger(triggerKey);
-            if(oldTrigger == null){
-                log.error("未找到相关任务");
-                return false;
-            }
+    public void modifyCronJobTime(String triggerName,String triggerGroup,String cronExpression) throws SchedulerException {
+
+        TriggerKey triggerKey = TriggerKey.triggerKey(triggerName, triggerGroup);
+        CronTrigger oldTrigger = (CronTrigger) scheduler.getTrigger(triggerKey);
+        if(oldTrigger != null){
             String oldCronExpression = oldTrigger.getCronExpression();
             if( !oldCronExpression.equalsIgnoreCase(cronExpression) ){
                 CronTrigger cronTrigger = TriggerBuilder
@@ -186,32 +166,26 @@ public class QuartzUtil {
                         .build();
                 scheduler.rescheduleJob(triggerKey, cronTrigger);
             }
-        } catch (SchedulerException e) {
-            e.printStackTrace();
-            log.error("修改cron定时任务时间失败");
+        }else {
+            log.warn("未找到相关任务");
         }
-        return true;
+
+
     }
 
     /**
-     * @Title removeJob
+     * @Title: removeJob
      * @Description: 删除指定定时任务
      * @params: [jobName, jobGroup, triggerName, triggerGroup]
-     * @return: boolean
+     * @return: void
      * @throws:
      * @author: caiwei
-     * @date: 2019/5/5 21:44
+     * @date: 2019/9/3 10:24
      */
-    public boolean removeJob(String jobName,String jobGroup,String triggerName,String triggerGroup){
-        try {
-            scheduler.unscheduleJob(TriggerKey.triggerKey(triggerName, triggerGroup));
-            scheduler.deleteJob(JobKey.jobKey(jobName, jobGroup));
-        } catch (SchedulerException e) {
-            e.printStackTrace();
-            log.error("删除定时任务失败");
-            return false;
-        }
-        return true;
+    public void removeJob(String jobName,String jobGroup,String triggerName,String triggerGroup) throws SchedulerException {
+
+        scheduler.unscheduleJob(TriggerKey.triggerKey(triggerName, triggerGroup));
+        scheduler.deleteJob(JobKey.jobKey(jobName, jobGroup));
     }
 
 

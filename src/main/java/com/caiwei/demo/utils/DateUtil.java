@@ -35,11 +35,11 @@ public class DateUtil {
         }
     }
 
-    public static String getFormatNow(){
+    public static String formatNow(){
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
     }
 
-    public static String getFormatDateTime(Date date, String pattern) {
+    public static String formatDateTime(Date date, String pattern) {
 
         return new SimpleDateFormat(pattern).format(date);
     }
