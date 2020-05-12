@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
 
 /**
  * @ClassName: XMLService
- * @Description: 解析xml节点(包含跟javabean属性相同节点的（相对于这些节点的）子节点)为javaBean
+ * @Description: 解析xml节点(包含跟javabean属性相同节点的（相对于这些节点的）父节点)为javaBean
  * @auther: caiwei
  * @date: 2019/9/3 23:44
  */

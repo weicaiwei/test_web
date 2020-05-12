@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Repository;
 
 import java.util.Set;
@@ -20,13 +21,13 @@ import java.util.Set;
 public interface UserAndRoleMapper {
 
     @Results(id = "userMap", value = {
-            @Result(column = "username", property = "username", javaType = String.class),
-            @Result(column = "password", property = "password", javaType = String.class),
-            @Result(column = "phone",    property = "phone",    javaType = String.class),
-            @Result(column = "email",    property = "email",    javaType = String.class),
-            @Result(column = "image_url", property = "imageUrl",javaType = String.class),
-            @Result(column = "last_ip",   property = "lastIp",  javaType = String.class),
-            @Result(column = "last_time", property = "lastTime",javaType = String.class)
+            @Result(column = "username", property = "username", javaType = String.class,jdbcType = JdbcType.VARCHAR ),
+            @Result(column = "password", property = "password", javaType = String.class,jdbcType = JdbcType.VARCHAR ),
+            @Result(column = "phone",    property = "phone",    javaType = String.class,jdbcType = JdbcType.VARCHAR ),
+            @Result(column = "email",    property = "email",    javaType = String.class,jdbcType = JdbcType.VARCHAR ),
+            @Result(column = "image_url", property = "imageUrl",javaType = String.class,jdbcType = JdbcType.VARCHAR ),
+            @Result(column = "last_ip",   property = "lastIp",  javaType = String.class,jdbcType = JdbcType.VARCHAR ),
+            @Result(column = "last_time", property = "lastTime",javaType = String.class,jdbcType = JdbcType.VARCHAR )
     })
 
     //通过手机号查询用户信息

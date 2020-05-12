@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -20,7 +21,12 @@ import java.util.ArrayList;
  * @auther: caiwei
  * @date: 2019/6/26 00:19
  */
+@Component
 public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
+
+    private final static String HEADER = "Authorization";
+    private final static String BEARER = "Bearer ";
+    private final static String loginUrl = "/user/login";
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
